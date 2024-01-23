@@ -5,8 +5,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
-    <title>新年快乐 — 年会抽奖小程序</title>
-    <meta name="keywords" content="抽奖H5网页,年会抽奖程序,炫酷的抽奖网页"/>
+    <title>“赴寰宇 NEW无界”年会抽奖</title>
+    <meta name="keywords" content="WFC提供抽奖H5网页,年会抽奖程序"/>
     <meta name="description" content="一个用于年会抽奖的炫酷网页！"/>
     <link href="img/logo.ico" rel="icon">
     <link href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/layui/2.5.7/css/layui.css" type="text/css"
@@ -105,6 +105,7 @@
             margin: 20px 10px;
             background-image: url("img/bg.png");
             background-size: 100% 100%;
+            background-color: rebeccapurple;
         }
 
 
@@ -124,7 +125,7 @@
 
         /*显示抽奖结果的样式*/
         .result2 .list ul li .footer {
-            width: 80%;
+            width: 100%;
             background-image: url("img/bg2.png");
             margin-bottom: 0;
             background-size: 100% 100%;
@@ -400,7 +401,7 @@
                 <!--循环输出结果-->
                 <ul>
                     <li v-for="(item,index) in prizesRverese" :key="index"
-                        :style="{width: item.level == 1?'25%':item.level == 2?'20%':'12%'}">
+                        :style="{width: item.level == 1?'25%':item.level == 2?'20%':'14%'}">
                         <div class="title" :style="{fontSize:item.level == 1?'33px':'28px'}">{{item.name}}</div>
                         <img :src="item.url">
                         <div class="footer">{{item.person == "" ? item.prize : item.person}}</div>
@@ -627,7 +628,6 @@
 
                 });
 
-
             /*更新被抽中过的名单*/
             localStorage.setItem('choosed', JSON.stringify(choosed));
 
@@ -656,33 +656,33 @@
                 /* 奖品名、级别、级别、图片、中奖人*/
                 prizes: [
                     {
-                        name: "龙年帆布包", prize: "四等奖 ", level: 4, "url": "img/prize/a9.jpg", person: ""
+                        name: "龙年帆布包", prize: "四等奖 ", level: 4, "url": "img/prize/a9.jpg", number:3, person: ""
                     },
                     {
-                        name: "青砂石狮子桌面摆件", prize: "四等奖 ", level: 4, "url": "img/prize/a8.jpg", person: ""
+                        name: "青砂石狮子桌面摆件", prize: "四等奖 ", level: 4, "url": "img/prize/a8.jpg",number:3, person: ""
                     },
                     {
-                        name: "泡面锅", prize: "四等奖 ", level: 4, "url": "img/prize/a7.jpg", person: ""
-                    },
-
-                    {
-                        name: "香薰蜡烛新年礼盒", prize: "三等奖 ", level: 3, "url": "img/prize/a6.jpg", person: ""
-                    },
-                    {
-                        name: "红色龙年抱枕", prize: "三等奖 ", level: 3, "url": "img/prize/a5.jpg", person: ""
-                    },
-                    {
-                        name: "一壶三杯茶具套装", prize: "三等奖 ", level: 3, "url": "img/prize/a4.jpg", person: ""
+                        name: "泡面锅", prize: "四等奖 ", level: 4, "url": "img/prize/a7.jpg",number:3, person: ""
                     },
 
                     {
-                        name: "手磨咖啡套装", prize: "二等奖", level: 2, "url": "img/prize/a3.jpg", person: ""
+                        name: "香薰蜡烛新年礼盒", prize: "三等奖 ", level: 3, "url": "img/prize/a6.jpg", number:3, person: ""
                     },
                     {
-                        name: "披肩按摩器", prize: "二等奖", level: 2, "url": "img/prize/a2.jpg", person: ""
+                        name: "红色龙年抱枕", prize: "三等奖 ", level: 3, "url": "img/prize/a5.jpg",number:3, person: ""
                     },
                     {
-                        name: "空气炸锅5L", prize: "一等奖 ", level: 1, "url": "img/prize/a1.jpg", person: ""
+                        name: "一壶三杯茶具套装", prize: "三等奖 ", level: 3, "url": "img/prize/a4.jpg",number:3, person: ""
+                    },
+
+                    {
+                        name: "手磨咖啡套装", prize: "二等奖", level: 2, "url": "img/prize/a3.jpg",number:2, person: ""
+                    },
+                    {
+                        name: "披肩按摩器", prize: "二等奖", level: 2, "url": "img/prize/a2.jpg",number:2, person: ""
+                    },
+                    {
+                        name: "空气炸锅5L", prize: "一等奖 ", level: 1, "url": "img/prize/a1.jpg", number:1, person: ""
                     }
                 ],
                 /*正在抽第几个奖*/
@@ -735,8 +735,6 @@
                 },
                 toggle: function () {
 
-
-
                     if(this.position >= this.prizes.length){
 
                             /*所有奖品抽完了，当前奖品等级0*/
@@ -767,9 +765,10 @@
                         /*将词云的速度转换为正常速度*/
                         TagCanvas.SetSpeed('myCanvas', speed());
 
+                        let number = this.prizes[this.position].number ?? 1;
 
-                        /*随机生成抽奖名单*/
-                        var ret = lottery(this.selected);
+                        let ret = lottery(number);
+                        let personMsg = ret.join(' ');
 
                         /*如果所有人都被抽中了，提示无可抽奖人员*/
                         if (ret.length === 0) {
@@ -783,16 +782,11 @@
                         } else {
 
                             $('#main').addClass('mask');
-                            /*显示抽奖结果*/
-                            /*$('#result').find(".item2").text(ret[0]);
-                            $('#result').fadeIn();
-                            */
+                       
                             let level = "";
-
 
                             /*判断当前的奖品等级*/
                             switch (this.prizes[this.position].level) {
-
                                 case 1:
                                     level = "一等奖";
                                     break;
@@ -803,12 +797,12 @@
                                     level = "三等奖";
                                     break;
                                 default:
-
+                                    level = "幸运奖";
                             }
 
 
                             /*中奖信息*/
-                            this.prizes[this.position].person = ret[0];
+                            this.prizes[this.position].person = personMsg;
 
 
                             /*重新加载人员名单*/
@@ -817,16 +811,11 @@
                             /*重新创建词云*/
                             createCanvas(this);
 
-
                             /*记录中奖时间和名单到本地*/
-                            localStorage.setItem(new Date().toString(), ret[0]);
-
-
+                            localStorage.setItem(new Date().toString(), personMsg);
                         }
 
-
                         this.running = 2;
-
 
                         /*进入中奖结果公式状态*/
                     } else if (this.running == 2) {
