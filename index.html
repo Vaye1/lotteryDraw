@@ -105,7 +105,6 @@
             margin: 20px 10px;
             background-image: url("img/bg.png");
             background-size: 100% 100%;
-            background-color: rebeccapurple;
         }
 
 
@@ -125,12 +124,12 @@
 
         /*显示抽奖结果的样式*/
         .result2 .list ul li .footer {
-            width: 100%;
+            width: 90%;
             background-image: url("img/bg2.png");
             margin-bottom: 0;
             background-size: 100% 100%;
             color: #ffffff;
-            font-size: 25px;
+            font-size: 18px;
             padding: 3px;
         }
 
@@ -402,7 +401,7 @@
                 <ul>
                     <li v-for="(item,index) in prizesRverese" :key="index"
                         :style="{width: item.level == 1?'25%':item.level == 2?'20%':'14%'}">
-                        <div class="title" :style="{fontSize:item.level == 1?'33px':'28px'}">{{item.name}}</div>
+                        <div class="title" :style="{fontSize:item.level == 1?'33px':'20px'}">{{item.name}}</div>
                         <img :src="item.url">
                         <div class="footer">{{item.person == "" ? item.prize : item.person}}</div>
                     </li>
